@@ -1,0 +1,19 @@
+Put the sequence data to be analyzed into a separate directory, which only supports FNA suffix sequence file;
+
+Enter the address of the directory, and the program will automatically analyze it.
+
+Three files were obtained after the analysis
+
+1. File with 'result!_' at the beginning of filename: indicates the CRISPRs containing score information found by findcrispr. 
+Each line represents a CRISPR, includes the starting position of the repeater separated by ',' ,’#####‘，score，’:‘，repeater sequence，’@‘，the copy number of repeater sequence，’$‘，the length of repeater sequence，’__‘ ,the spacer sequences separated by ''
+
+2.  File with '-show.txt ' at the end of filename: indicates that the CRISPRs found by findcrispr  displayed in a more readable format.
+All CRISPRs are marked with crispr1, crispr2,... And crispr1, for example, is marked with the starting position, sequences and lengths of repeaters and spacers. 
+
+3.png image file: indicates that the CRISPRs found by findcrispr  displayed in pictures.
+
+A rectangle and a diamond represent a CRISPR. The number +'x' marked on the top of the rectangle represents the number of copies of the repeater. 
+The number on the left of the rectangle represents the length of the repeater sequence. 
+The number below the rectangle represents the starting position of the CRISPR. 
+The number on the right of the diamond represents the ending position of the CRISPR
+The rectangle and diamond of each CRISPR are represented by different colors and connected by a straight line according to their orders in the gene sequences.
