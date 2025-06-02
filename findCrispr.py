@@ -24,7 +24,7 @@ import matplotlib.patches as mpathes
 #plt.switch_backend('Tkagg')
 matplotlib.use('Agg')
 cnames =['aliceblue','antiquewhite','aquamarine','bisque' ,'black','blanchedalmond','blue' ,'blueviolet','brown','burlywood','cadetblue','chartreuse','chocolate','coral','cornflowerblue','cornsilk' ,'crimson','cyan' ,'darkblue' ,'darkcyan' ,'darkgoldenrod' ,'darkgray' ,'darkgreen','darkkhaki','darkmagenta' ,'darkolivegreen','darkorange','darkorchid','darkred','darksalmon','darkseagreen','darkslateblue' ,'darkslategray' ,'darkturquoise' ,'darkviolet','deeppink' ,'deepskyblue' ,'dimgray','dodgerblue','firebrick','floralwhite' ,'forestgreen' ,'fuchsia','gainsboro','ghostwhite','gold' ,'goldenrod','gray' ,'green','greenyellow' ,'honeydew' ,'hotpink','indianred','indigo' ,'ivory','khaki','lavender' ,'lavenderblush' ,'lawngreen','lemonchiffon','lightblue','lightcoral','lightcyan','lightgoldenrodyellow','lightgreen','lightgray','lightpink','lightsalmon' ,'lightseagreen' ,'lightskyblue','lightslategray','lightsteelblue','lightyellow' ,'lime' ,'limegreen','linen','magenta','maroon' ,'mediumaquamarine','mediumblue','mediumorchid','mediumpurple','mediumseagreen','mediumslateblue' ,'mediumspringgreen' ,'mediumturquoise' ,'mediumvioletred' ,'midnightblue','mintcream','mistyrose','moccasin' ,'navajowhite' ,'navy' ,'oldlace','olive','olivedrab','orange' ,'orangered','orchid' ,'palegoldenrod' ,'palegreen','paleturquoise' ,'palevioletred' ,'papayawhip','peachpuff','peru' ,'pink' ,'plum' ,'powderblue','purple' ,'red','rosybrown','royalblue','saddlebrown' ,'salmon' ,'sandybrown','seagreen' ,'seashell' ,'sienna' ,'silver' ,'skyblue','slateblue','slategray','snow' ,'springgreen' ,'steelblue','tan','teal' ,'thistle','tomato' ,'turquoise','violet' ,'wheat','white','whitesmoke','yellow' ,'yellowgreen']
-
+strhead='START       REPEAT                           SPACER'
 def find_last(string,str):
     last_position=-1
     while True:
@@ -68,7 +68,59 @@ def file2matrix(filename):
         classLabelVector.append(int(listFromLine1[-1]))
         index += 1
     return returnMat,classLabelVector
-
+def plotresp( stptdata,drawdt,z1s,z2s,z3s,z4s,z5s,zts,sts,eds,rls,str1s,list1s,seqfilename,seqname):       
+    tempST=[]
+    paixu=[]
+    for weipaixu in range(len(drawdt)):
+        tempST.append(stptdata[weipaixu][0])
+    for pxi in  range(len(drawdt)):    
+       paixu.append(tempST.index(sorted(tempST)[pxi]))
+    fig=plt.figure(figsize=(3*len(drawdt) ,0.3))
+    ax = fig.add_subplot(1,1,1 , aspect='auto')
+    #print(paixu)
+    for drawl in range(len(paixu)):
+        #print(drawl)
+        lenkkri=drawdt[paixu[drawl]]
+        z1=z1s[drawl]
+        z2=z2s[drawl]
+        z3=z3s[drawl]
+        z4=z4s[drawl]
+        z5=z5s[drawl]
+        str1=str1s[paixu[drawl]]
+        list1=list1s[paixu[drawl]]
+        indekk=paixu[drawl]+1
+        lenkk=len(drawdt)    
+        zt=zts[drawl]
+        st=sts[drawl]
+        ed=eds[drawl]
+        rl=rls[drawl]
+        tempSTPT=stptdata[paixu[drawl]]
+        #print(indekk)
+        #stptdata[1:9][0]
+    #ax = fig.add_subplot(1,lenkk,indekk , aspect='auto')
+    #z3 = np.array([0.3,0 ])
+    #z4 = np.array([0.6,0.1])
+        #if (drawl==0):print(list1)
+        plt.axis([0,1*len(drawdt) , 0,0.2] )
+        plt.title(seqname+'('+seqfilename+')',x=0.1,y=2,fontstyle='italic',size=10)
+        plt.text(zt[0],zt[1],str(lenkkri)+'X')
+        plt.text(st[0],st[1],str(tempSTPT[0]))
+        plt.text(ed[0],ed[1],str(tempSTPT[-1]+len(str1)+len(list1[-1])))
+        plt.text(rl[0],rl[1],str(len(str1)))
+        plt.plot(z1, z5, cnames[-1])
+        plt.plot(z2, z5, cnames[-1])
+     #   plt.plot(z1, label=str1)
+        rect = mpathes.Rectangle(z3,0.2,1,color=cnames[(indekk+1)%137])
+        ax.add_patch(rect)
+     
+        polygon = mpathes.RegularPolygon(z4,4,0.1,color=cnames[2*(indekk+1)%137])
+        ax.add_patch(polygon)
+        frame = plt.gca()
+        frame .axes.get_yaxis().set_visible(False)
+        frame .axes.get_xaxis().set_visible(False)
+        plt.axis('off')
+        #plt.close()
+#dataSet, labels =file2matrix('query_result.txt')  
 dataSet=array([[8,24.0,3.1216216216216215,12,17.166666666666668,2.098348348348348,9,21.444444444444443,3.334000667334001,8,9.375,0.8576858108108109,3,30.0,0.6666666666666666,3,24.666666666666668,3.0690690690690694,1,24.0,0.0,1,4.0,0.0,1,22.0,0.0,6,13.0,0.7477477477477478,2,25.0,0.6756756756756757,2,10.0,0.10810810810810811,3,21.0,4.45045045045045,1,21.0,0.0,4,27.25,0.14020270270270271,1,0.0,0.0,1,9.0,0.0,2,10.5,0.8175675675675675,1,2.0,0.0,4,10.75,0.8699324324324325],
 [4,17.25,1.8995535714285714,10,12.8,1.9628571428571429,9,15.11111111111111,2.0749559082892417,5,9.0,2.5428571428571427,1,24.0,0.0,3,15.0,1.8095238095238095,0,0.0,0.0,0,0.0,0.0,2,9.0,0.03571428571428571,6,11.5,1.818452380952381,1,14.0,0.0,0,0.0,0.0,1,23.0,0.0,0,0.0,0.0,4,18.5,0.044642857142857144,4,9.75,2.6316964285714284,0,0.0,0.0,1,4.0,0.0,3,13.333333333333334,2.5079365079365084,1,1.0,0.0],
 [6,21.666666666666668,1.781362007168459,8,7.5,0.6774193548387096,12,14.583333333333334,1.7067652329749103,5,20.0,3.238709677419355,3,22.0,1.956989247311828,0,0.0,0.0,1,12.0,0.0,2,26.0,0.2903225806451613,1,10.0,0.0,4,5.5,0.04032258064516129,3,9.333333333333334,1.4050179211469533,0,0.0,0.0,2,24.0,0.12903225806451613,3,9.666666666666666,1.0609318996415769,5,15.8,0.2503225806451613,2,9.5,2.911290322580645,0,0.0,0.0,1,1.0,0.0,2,22.5,0.20161290322580644,1,24.0,0.0],
@@ -3075,7 +3127,7 @@ kkrlens=[]
 repeatnu=[]
 relen=[]
 splen=[]
-
+namelth=0
 list_name=[]
 def file_name(file_dir):  
     for root, dirs, files in os.walk(file_dir):    
@@ -3105,8 +3157,321 @@ for h in range(len(list_name)) :
          SSSS = open(strinput0+'\\'+strinput1, 'r')
          S=SSSS.read().replace('\n','') 
          seqname=''
+         seqname=S[(S.find(' ')+1):S.find(',')] 
+         namelth=S.find('genome')+5
          if '>' in SSSS:
                 next(SSSS)
                 S=SSSS.read().replace('\n','')
-                seqname=S[0][(S[0].find(' ')+1):S[0].find(',')]
- 
+                #seqname=S[0][(S[0].find(' ')+1):S[0].find(',')]
+         if 'c'=='c':
+             starttime = datetime.datetime.now()
+             es = ['A', 'C', 'G', 'T']
+             pss = [[i for i, c in enumerate(S) if c == e] for e in es]
+             pss = [ps for ps in pss if len(ps) > 1]
+             kkr=[]
+             disr=[]
+             ser=[]
+             Atribut=[]
+             score=[]
+             newkkr=[]
+             newdisr=[]
+             newser=[]
+             lense=[]
+             lenkkr=[]
+             for n in range(2, 41):
+                pss = [[p for p in ps if p + n-1  < len(S) and S[p + n-1 ] == e] for ps in pss for e in es]
+                pss = [ps for ps in pss if len(ps) > 1]
+                it1=[]
+                if 20 <= n <= 40:
+                    it1=[]
+                    itt1=[]
+                    for ps in pss:
+                        it1=[] 
+                        sps=[]
+                        itt1=[]
+                        itt1=sorted(list(ps), reverse=False)
+                        lele=len(itt1)-1
+                        for ile in range(lele):
+                            flagi=0 
+                            if 160<=sorted(list(ps), reverse=False)[ile+1]-sorted(list(ps), reverse=False)[ile]:
+                             if ile-flagi>3:
+                               itt1=sorted(list(ps), reverse=False)[flagi:ile]
+                               itv1=S[ps[0]:ps[0] + n][flagi:ile]   
+                               flagi=ile
+                               sps.append(S[(itt1[len(itt1)-1]+n):itt1[len(itt1)-1]+n+len(S[(itt1[0]+n):(itt1[1]-1)])])
+                               for i in range(len(itt1)-1):
+                                   sps.append(S[(itt1[i]+n):(itt1[i+ 1]-1)])
+                                   it1=itt1
+                                   
+                                   if 160<len(S[(itt1[i]+n):(itt1[i+ 1]-1)]):
+                                                     it1=[]
+                                                     sps=[]
+                                                     break
+                                   if 20>len(S[(itt1[i]+n):(itt1[i+ 1]-1)]):
+                                                        it1=[]
+                                                        sps=[]
+                                                        break
+                                   if S[(itt1[i]+n):(itt1[i+ 1]-1)]==sps[len(sps)-2]:
+                                            if len(itt1)<=3:
+                                               it1=[]
+                                               sps=[]
+                                               break 
+                                   if i+ 3<=len(itt1)-1:        
+                                        if S[(itt1[i+ 1]+n):(itt1[i+ 1+ 1]-1)]==sps[len(sps)-1]:
+                                            if len(itt1)<=3:
+                                               it1=[]
+                                               sps=[]
+                                               break 
+                                            if len(itt1)>3:
+                                                if S[(itt1[i+ 2]+n):(itt1[i+ 3]-1)]==sps[len(sps)-1]:
+                                                    it1=[]
+                                                    sps=[]
+                                                    break 
+                                        if S[(itt1[i+ 1]+n):(itt1[i+ 1+ 1]-1)]!=sps[len(sps)-1]:
+                                          
+                                            if 6>len(itt1)>3:
+                                                if S[(itt1[i+ 2]+n):(itt1[i+ 3]-1)]==sps[len(sps)-1]:
+                                                       if S[(itt1[i+ 1]+n):(itt1[i+ 1+ 1]-1)]!=S[(itt1[i+ 3]+n):(itt1[i+ 3]+n)+itt1[i+ 1+ 1]-1-(itt1[i+ 1]+n) ]:
+                                                                it1=[]
+                                                                sps=[]
+                                                                break 
+                               if len(sps) >0: 
+                                   sps.append(S[(itt1[len(itt1)-1]+n):itt1[len(itt1)-1]+n-1+len(sps[-1])])
+                                   del sps[0]
+                               if len(it1)>=3:         
+                                 ps1agct = [[ii for ii, c in enumerate(itv1) if c == e] for e in es]
+                                 ps2agct = [[p for p in ps if p + 1 < len(itv1) and itv1[p + 1] == e] for ps in ps1agct for e in es]
+                                 psagct = ps1agct + ps2agct
+                                 psn = [len(ps) for ps in psagct]
+                                 newpsn = [0 for i in range(len(psn))]
+                                 for i1 in range(len(psn)):
+                                      if psn[i1] > 0:
+                                         newpsn[i1] = psn[i1]
+                                      if psn[i1] == 0:
+                                         newpsn[i1] = psn[i1] + 1
+                                 psmiuf = [sum(ps) for ps in psagct]
+                                 psmiu = [f / m for f, m in zip(psmiuf, newpsn)]
+                                 for i2 in range(len(psagct)):
+                                      temppsagct = [(f - m) * (f - m) for f, m in
+                                              zip(psagct[i2], [psmiu[i2] for j3 in range(len(psagct[i2]))])]
+                                      psagct[i2] = temppsagct
+                                 psmiuf = [sum(ps) for ps in psagct]
+                                 psdifang = [f / (m * v) for f, m, v in zip(psmiuf, newpsn, [len(itv1) for j3 in range(len(psagct))])]
+                                 represth=[]
+                                 represt = [[i3, j2, k2] for i3, j2, k2 in zip(psn, psmiu, psdifang)]
+                                 for i4 in range(len(represt)):
+                                      represth.extend(represt[i4])
+                                 classifierResult1,dis1=classify0(represth, dataSet, labels, 5)
+                                 kkr.append(it1)
+                                 ser.append(itv1)
+                                 disr.append(dis1)
+                            if 30>sorted(list(ps), reverse=False)[ile+1]-sorted(list(ps), reverse=False)[ile]:itt1=[]
+                        itt1=sorted(list(ps), reverse=False)
+                        sps.append(S[(itt1[len(itt1)-1]+n):itt1[len(itt1)-1]+n+len(S[(itt1[0]+n):(itt1[1]-1)])])
+                        for i in range(len(itt1)-1):
+                                        sps.append(S[(itt1[i]+n):(itt1[i+ 1]-1)])
+                                        it1=itt1
+                                        if 160<len(S[(itt1[i]+n):(itt1[i+ 1]-1)]):
+                                                     it1=[]
+                                                     sps=[]
+                                                     break
+                                        if 20>len(S[(itt1[i]+n):(itt1[i+ 1]-1)]):
+                                                        it1=[]
+                                                        sps=[]
+                                                        break
+                                        if S[(itt1[i]+n):(itt1[i+ 1]-1)]==sps[len(sps)-2]:
+                                            if len(itt1)<=3:
+                                               it1=[]
+                                               sps=[]
+                                               break 
+                                        if i+3<= len(itt1)-1 :
+                                          if S[(itt1[i+ 1]+n):(itt1[i+ 1+ 1]-1)]==sps[len(sps)-1]:
+                                            if len(itt1)<=3:
+                                               it1=[]
+                                               sps=[]
+                                               break 
+                                            if len(itt1)>3:
+                                                if S[(itt1[i+ 2]+n):(itt1[i+ 3]-1)]==sps[len(sps)-1]:
+                                                    it1=[]
+                                                    sps=[]
+                                                    break 
+                                          if S[(itt1[i+ 1]+n):(itt1[i+ 1+ 1]-1)]!=sps[len(sps)-1]:
+
+                                            if 6>len(itt1)>3:
+                                                if S[(itt1[i+ 2]+n):(itt1[i+ 3]-1)]==sps[len(sps)-1]:
+                                                       if S[(itt1[i+ 1]+n):(itt1[i+ 1+ 1]-1)]!=S[(itt1[i+ 3]+n):(itt1[i+ 3]+n)+itt1[i+ 1+ 1]-1-(itt1[i+ 1]+n) ]:
+                                                                it1=[]
+                                                                sps=[]
+                                                                break 
+                        if len(sps) >0: 
+                                   sps.append(S[(itt1[len(itt1)-1]+n):itt1[len(itt1)-1]+n-1+len(sps[-1])])
+                                   del sps[0]
+             
+                        itv1=S[ps[0]:ps[0] + n]  
+                        
+                        if len(it1)>=3:         
+             
+                                 
+                                 ps1agct = [[ii for ii, c in enumerate(itv1) if c == e] for e in es]
+                                 ps2agct = [[p for p in ps if p + 1 < len(itv1) and itv1[p + 1] == e] for ps in ps1agct for e in es]
+                                 psagct = ps1agct + ps2agct
+                                 psn = [len(ps) for ps in psagct]
+                                 newpsn = [0 for i in range(len(psn))]
+                                 for i1 in range(len(psn)):
+                                      if psn[i1] > 0:
+                                         newpsn[i1] = psn[i1]
+                                      if psn[i1] == 0:
+                                         newpsn[i1] = psn[i1] + 1
+                                 psmiuf = [sum(ps) for ps in psagct]
+                                 psmiu = [f / m for f, m in zip(psmiuf, newpsn)]
+                                 for i2 in range(len(psagct)):
+                                      temppsagct = [(f - m) * (f - m) for f, m in
+                                              zip(psagct[i2], [psmiu[i2] for j3 in range(len(psagct[i2]))])]
+                                      psagct[i2] = temppsagct
+                                 psmiuf = [sum(ps) for ps in psagct]
+                                 psdifang = [f / (m * v) for f, m, v in zip(psmiuf, newpsn, [len(itv1) for j3 in range(len(psagct))])]
+                                 represth=[]
+                                 represt = [[i3, j2, k2] for i3, j2, k2 in zip(psn, psmiu, psdifang)]
+                                 for i4 in range(len(represt)):
+                                      represth.extend(represt[i4])
+                                 classifierResult1,dis1=classify0(represth, dataSet, labels, 5)
+                                 kkr.append(it1)
+                                 ser.append(itv1)
+                                 disr.append(dis1)
+             for i in range(len(kkr)):
+                     if len(kkr[i])==2:Atribut.append(0)
+                     if len(kkr[i])>=3: 
+                         sumdi=0
+                         for j in range(len(kkr[i])-2):
+                             sumdi=sumdi+ abs(kkr[i][j]+kkr[i][j+2]-2*kkr[i][j+1]) 
+                                   
+                         Atribut.append(sumdi/len(kkr[i]))           
+                     score.append(len(kkr[i])+len(ser[i])-Atribut[i]-float(disr[i])/len(ser[i]))
+             break_flag = False   
+             for i in range(len(kkr)):
+                 if kkr[i] in newkkr:pass
+                 else:
+                     newkkr.append(kkr[i])
+                     newdisr.append(score[i])
+                     newser.append(ser[i])
+                     break_flag11 = False
+                     for m in range(0,len(kkr)):
+                         for j in range(len(kkr[i])):
+                              
+                             for t in range(len(kkr[m])):
+                                  if abs(kkr[i][j] - kkr[m][t])<= (len(ser[i])*0.5+len(ser[m])*0.5 )* 3.5:
+                                      break_flag = True
+                                      if score[i]<score[m]:break_flag11 = False
+                                      if score[i]<score[m]:
+                                          break_flag11 = True
+                                          del newkkr[-1]
+                                          del newdisr[-1]
+                                          del newser[-1] 
+                                          break        
+                                      break
+                             if break_flag:break     
+                         
+                         if break_flag11:break
+             
+             with open(strinput0+'\\'+'result!_'+strinput1[0:len(strinput1)-4]+'.txt',"w") as f_w:
+                             for i in range(len(newkkr)):
+                                                    js1 = json.dumps(list(list(map(int,str(newkkr[i]).replace('[','').replace(']','').replace('.0','').replace('.00','').split(',')))
+                                                    -np.array(list(ones(len(list(map(int,str(newkkr[i]).replace('[','').replace(']','').replace('.0','').replace('.00','').split(',')))))*namelth)))).replace('[','').replace(']','').replace('.0','').replace('.00','')
+                                                    js2 = json.dumps(str(newser[i])).replace('"','').replace('"','')
+                                                    
+                                                    f_w.write(js1)
+                                                    f_w.write('#####')
+        #                                           
+                                                    f_w.write(str(newdisr[i]))
+                                                    f_w.write(':')
+                                                    f_w.write(js2) 
+                                                    f_w.write('@'+str(len(newkkr[i])))
+                                                    f_w.write('$'+str(len(newser[i]))+'__')
+                                                    for j in range(len(newkkr[i])-1):
+                                                           SPS=S[(newkkr[i][j]+len(newser[i])):(newkkr[i][j+1]-1)]
+                                                           f_w.write(SPS+' ') 
+                                                    f_w.write(S[(kkr[i][len(kkr[i])-1]+len(newser[i])):(kkr[i][len(kkr[i])-1]+len(newser[i])+len(SPS))])
+                                                    f_w.write('\n')       
+                             f_w.close()                               
+                             endtime=datetime.datetime.now()  
+                             print("Analysing time used ",end='')  
+                             print ((endtime - starttime).seconds,end='' )
+                             print('S')    
+             if 's'=='s':
+                 starttime = datetime.datetime.now()
+                 SSSS = open(strinput0+'\\'+list_name[h], 'r')
+                 
+                 kkr=[]
+                 disr=[]
+                 ser=[]
+                 lense=[]
+                 lenkkr=[] 
+                 SPS=[]
+                 xys=[]
+                 xyr=[]
+                 rect=[] 
+                 polygon=[]
+                 wlenkkr=[]
+                 y=[]
+                 x1=[]
+                 x2=[]
+                 xy2 =[] 
+                 xy3 =[] 
+                 yy=[]
+                 tloc=[]
+                 startloc=[]
+                 rptlenloc=[]
+                 endloc=[]
+                 for i in range(100):
+                     y.append(0.1) 
+                 if SSSS=='':
+                     pass    
+                 else:
+                   with open(strinput0+'\\'+'result!_'+strinput1[0:len(strinput1)-4]+'.txt',"r") as fr:
+                         for line in fr.readlines():
+                           line = line.strip()
+                           disr.append(line[line.rfind('#####')+5:line.rfind(':')])
+                           ser.append(line[line.rfind(':')+1:line.rfind('@')])
+                           lenkkr.append(line[line.rfind('@')+1:line.rfind('$')])
+                           lense.append(line[line.rfind('$')+1:line.rfind('__')])
+                           SPS.append(line[line.rfind('__')+2:len(line)-1].split(' '))
+                           kkri1=line[0:line.rfind('#####')].split(',')
+#                           print(strinput1)
+                           kkri2 = list(map(int,kkri1))
+                           kkr.append(kkri2) 
+                   wlenkkr=lenkkr    
+                   with open (strinput0+'\\'+strinput1[0:len(strinput)-4]+'-show.txt',"w") as fw0: 
+                           fw0.write(strhead+'\n')
+                           for i in range(len(kkr)):
+                               RS=ser[i]
+                               l=len(ser[i])
+                               fw0.write('crispr '+str(i+1)+'\n')
+                               for j in range(len(kkr[i])-1):
+                       
+                                   fw0.write(str( kkr[i][j])+' ')
+                                   fw0.write(str( RS)+' ')
+                                   fw0.write(SPS[i][j]+' ')
+                                   fw0.write('spacer length:'+' ')
+                                   fw0.write(str( len(SPS[i][j]))+' ')
+                                   fw0.write('repeater length:'+' ')
+                                   fw0.write(str( l) +'\n')        
+                               fw0.write( str( kkr[i][len(kkr[i])-1])+' ')
+                               fw0.write( RS+' ')
+                               fw0.write( S[(kkr[i][len(kkr[i])-1]+l):(kkr[i][len(kkr[i])-1]+l+len(SPS[i][len(kkr[i])-1]))]+' ')
+                               fw0.write('\n\n\n') 
+                           fw0.close()     
+                   for i in range(len(kkr)):
+                                    x1.append(np.linspace(0+i,0.3+i,100))
+                                    x2.append(np.linspace(0.7+i,1+i,100)) 
+                                    xy2.append(np.array([0.3+i,0 ]))
+                                    xy3.append(np.array([0.6+i,0.1])) 
+                                    tloc.append(np.array([0.3+i,0.3]))
+                                    startloc.append(np.array([0.3+i,-0.2]))
+                                    rptlenloc.append(np.array([0.23+i,0.1]))
+                                    endloc.append(np.array([0.7+i,0.2]))
+                                    yy.append(y)        
+                   if (len(wlenkkr)>0):
+                        plotresp(kkr,wlenkkr,x1,x2,xy2,xy3,yy,tloc,startloc,endloc,rptlenloc,ser,SPS,'findCrispr:'+strinput1[0:len(strinput1)-4]+'.fna',seqname)
+                        dpithresh=300
+                        if (len(wlenkkr)>18):dpithresh=100
+                        plt.savefig(strinput0+'\\'+strinput1[0:len(strinput1)-4]+'.png',bbox_inches='tight',dpi=dpithresh)
